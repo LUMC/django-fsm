@@ -171,7 +171,8 @@ def can_proceed(bound_method, *args, **kwargs):
     return meta.has_transition(bound_method.im_self) and meta.conditions_met(bound_method.im_self, *args, **kwargs)
 
 
-def get_available_FIELD_transitions(instance, field, *args, **kwargs):
+def get_available_FIELD_transitions(instance, *args, **kwargs):
+    field = kwargs.pop('field')
     curr_state = getattr(instance, field.name)
     result = []
     for transition in field.transitions:
