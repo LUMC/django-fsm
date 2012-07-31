@@ -102,7 +102,7 @@ class FSMMeta(object):
             instance.__dict__[field_name] = state
 
 
-def transition(field=None, source='*', target=None, save=False, conditions=[]):
+def transition(field=None, source='*', target=None, save=False, conditions=[], label=None):
     """
     Method decorator for mark allowed transition
 
@@ -117,6 +117,7 @@ def transition(field=None, source='*', target=None, save=False, conditions=[]):
         if not hasattr(func, '_django_fsm'):
             setattr(func, '_django_fsm', FSMMeta(field=field))
             setattr(func, 'do_not_call_in_templates', True)
+            setattr(func, 'label', label or func.func_name)
 
             @wraps(func)
             def _change_state(instance, *args, **kwargs):
