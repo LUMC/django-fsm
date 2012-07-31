@@ -116,6 +116,7 @@ def transition(field=None, source='*', target=None, save=False, conditions=[]):
     def inner_transition(func):
         if not hasattr(func, '_django_fsm'):
             setattr(func, '_django_fsm', FSMMeta(field=field))
+            setattr(func, 'do_not_call_in_templates', True)
 
             @wraps(func)
             def _change_state(instance, *args, **kwargs):
